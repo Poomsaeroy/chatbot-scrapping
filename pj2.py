@@ -1,20 +1,14 @@
-import pandas as pd
-import faiss
-import numpy as np
-from neo4j import GraphDatabase
-from flask import Flask, request, jsonify
-from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+import pandas as pd 
+import numpy as np 
+from neo4j import GraphDatabase 
+from flask import Flask, request, jsonify 
+from linebot import LineBotApi, WebhookHandler 
+from linebot.exceptions import InvalidSignatureError 
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, FlexSendMessage, QuickReply, QuickReplyButton, MessageAction
 from sentence_transformers import SentenceTransformer, util
-import json
+from bs4 import BeautifulSoup 
+import json 
 import requests
-from bs4 import BeautifulSoup
-from flask import Flask, request
-from linebot import LineBotApi
-from linebot.models import FlexSendMessage, TextSendMessage, QuickReply, QuickReplyButton, MessageAction
-from bs4 import BeautifulSoup
-import json
 from datetime import datetime
 
 app = Flask(__name__)
@@ -87,6 +81,8 @@ app = Flask(__name__)
 
 # Initialize LineBotApi with your channel access token
 line_bot_api = LineBotApi('channel_access_token')
+# Initialize WebhookHandler with your channel secret    
+handler = WebhookHandler('channel_secret')
 
 def ensure_http(url):
     if url.startswith('//'):
